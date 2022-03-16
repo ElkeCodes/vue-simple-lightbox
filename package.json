@@ -1,6 +1,7 @@
 {
   "name": "vue-simple-lightbox",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "author": "Elke Heymans",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
@@ -11,6 +12,11 @@
     "typecheck": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ElkeCodes/vue-simple-lightbox.git"
+  },
+  "keywords": ["vue", "vue3", "lightbox"],
   "dependencies": {
     "vue": "^3.2.31"
   },
