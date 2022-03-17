@@ -1,10 +1,10 @@
 <template>
   <button @click="active = !active">Toggle lightbox</button>
-  <vue-simple-lightbox ref="lightbox">
+  <vue-wrapping-lightbox ref="lightbox">
     <img src="https://randomfox.ca/images/57.jpg" alt="" />
     <img src="https://randomfox.ca/images/117.jpg" alt="" />
     <img src="https://randomfox.ca/images/40.jpg" alt="" />
-  </vue-simple-lightbox>
+  </vue-wrapping-lightbox>
   <div class="images">
     <img
       src="https://randomfox.ca/images/57.jpg"
@@ -29,7 +29,7 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import VueSimpleLightbox from "./VueSimpleLightbox.vue";
+import VueWrappingLightbox from "./VueWrappingLightbox.vue";
 
 const active = ref(false);
 </script>

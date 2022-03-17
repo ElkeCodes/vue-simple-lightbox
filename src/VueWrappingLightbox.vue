@@ -1,16 +1,9 @@
 <template>
-  <vue-simple-lightbox />
+  <vue-wrapping-lightbox />
 </template>
 
 <script setup lang="ts">
-import {
-  defineComponent,
-  h,
-  useSlots,
-  withDefaults,
-  ref,
-  Transition,
-} from "vue";
+import { defineComponent, h, useSlots, withDefaults, ref } from "vue";
 import NextArrow from "./components/NextArrow.vue";
 import PreviousArrow from "./components/PreviousArrow.vue";
 import Close from "./components/Close.vue";
@@ -47,7 +40,7 @@ const openImage = (index: number): void => {
   activeIndex.value = index;
 };
 
-const VueSimpleLightbox = defineComponent({
+const VueWrappingLightbox = defineComponent({
   render() {
     if (!slots.default) {
       return undefined;

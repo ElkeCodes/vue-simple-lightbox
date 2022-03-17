@@ -1,6 +1,6 @@
 {
-  "name": "vue-simple-lightbox",
-  "version": "0.0.1",
+  "name": "vue-wrapping-lightbox",
+  "version": "0.0.2",
   "author": "Elke Heymans",
   "scripts": {
     "dev": "vite",
@@ -14,17 +14,32 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ElkeCodes/vue-simple-lightbox.git"
+    "url": "https://github.com/ElkeCodes/vue-wrapping-lightbox.git"
   },
-  "keywords": ["vue", "vue3", "lightbox"],
+  "keywords": [
+    "vue",
+    "vue3",
+    "lightbox"
+  ],
+  "files": ["dist"],
+  "main": "./dist/vue-wrapping-lightbox.umd.js",
+  "module": "./dist/vue-wrapping-lightbox.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/vue-wrapping-lightbox.es.js",
+      "require": "./dist/vue-wrapping-lightbox.umd.js"
+    }
+  },
   "dependencies": {
     "vue": "^3.2.31"
   },
   "devDependencies": {
+    "@rollup/plugin-typescript": "^8.3.1",
     "@rushstack/eslint-patch": "^1.1.0",
     "@types/jsdom": "^16.2.14",
     "@types/node": "^16.11.25",
     "@vitejs/plugin-vue": "^2.2.2",
+    "@vue/compiler-sfc": "^3.2.31",
     "@vue/eslint-config-prettier": "^7.0.0",
     "@vue/eslint-config-typescript": "^10.0.0",
     "@vue/test-utils": "^2.0.0-rc.18",
@@ -35,6 +50,9 @@
     "eslint-plugin-vue": "^8.2.0",
     "jsdom": "^19.0.0",
     "prettier": "^2.5.1",
+    "rollup": "^2.70.1",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-vue": "^6.0.0",
     "start-server-and-test": "^1.14.0",
     "typescript": "~4.5.5",
     "vite": "^2.8.4",
@@ -42,3 +60,4 @@
     "vue-tsc": "^0.31.4"
   }
 }
+
