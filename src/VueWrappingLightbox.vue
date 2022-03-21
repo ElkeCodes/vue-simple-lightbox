@@ -47,84 +47,82 @@ const VueWrappingLightbox = defineComponent({
         {
           ...attrs,
         },
-        [
-          slots.default(),
-          h(
-            "div",
-            {
-              class: { lightbox: true, "lightbox-active": isActive.value },
-              onClick: closeLightbox,
-            },
-            [
-              h("div", { class: "lightbox-content" }, [
-                h(slots.default().at(0).children.at(activeIndex.value), {
-                  class: "lightbox-image",
-                }),
-              ]),
-              h(
-                "div",
-                { class: "lightbox-close", onClick: closeLightbox },
-                h(Close)
-              ),
-              h(
-                "div",
-                { class: "lightbox-previous", onClick: previousImage },
-                h(PreviousArrow)
-              ),
-              h(
-                "div",
-                { class: "lightbox-next", onClick: nextImage },
-                h(NextArrow)
-              ),
-              h(
-                "div",
-                { class: "lightbox-counter" },
-                `${activeIndex.value + 1} / ${
-                  slots.default().at(0).children.length
-                }`
-              ),
-              h(
-                "div",
-                { class: "lightbox-thumbnails" },
-                slots.default().map((vnode, index) => {
-                  if (vnode.type === "img") {
-                    return h("div", {
-                      class: {
-                        "lightbox-thumbnail": true,
-                        "lightbox-thumbnail-active":
-                          activeIndex.value === index,
-                      },
-                      style: {
-                        "background-image": `url(${vnode.props.src})`,
-                      },
-                      onClick: (event) => {
-                        openImage(index);
-                        event.stopPropagation();
-                      },
-                    });
-                  }
-                  return vnode.children.map((vnode) =>
-                    h("div", {
-                      class: {
-                        "lightbox-thumbnail": true,
-                        "lightbox-thumbnail-active":
-                          activeIndex.value === index,
-                      },
-                      style: {
-                        "background-image": `url(${vnode.props.src})`,
-                      },
-                      onClick: (event) => {
-                        openImage(index);
-                        event.stopPropagation();
-                      },
-                    })
-                  );
-                })
-              ),
-            ]
-          ),
-        ]
+        slots.default()
       ),
+      [
+        h(
+          "div",
+          {
+            class: { lightbox: true, "lightbox-active": isActive.value },
+            onClick: closeLightbox,
+          },
+          [
+            h("div", { class: "lightbox-content" }, [
+              h(slots.default().at(0).children.at(activeIndex.value), {
+                class: "lightbox-image",
+              }),
+            ]),
+            h(
+              "div",
+              { class: "lightbox-close", onClick: closeLightbox },
+              h(Close)
+            ),
+            h(
+              "div",
+              { class: "lightbox-previous", onClick: previousImage },
+              h(PreviousArrow)
+            ),
+            h(
+              "div",
+              { class: "lightbox-next", onClick: nextImage },
+              h(NextArrow)
+            ),
+            h(
+              "div",
+              { class: "lightbox-counter" },
+              `${activeIndex.value + 1} / ${
+                slots.default().at(0).children.length
+              }`
+            ),
+            h(
+              "div",
+              { class: "lightbox-thumbnails" },
+              slots.default().map((vnode, index) => {
+                if (vnode.type === "img") {
+                  return h("div", {
+                    class: {
+                      "lightbox-thumbnail": true,
+                      "lightbox-thumbnail-active": activeIndex.value === index,
+                    },
+                    style: {
+                      "background-image": `url(${vnode.props.src})`,
+                    },
+                    onClick: (event) => {
+                      openImage(index);
+                      event.stopPropagation();
+                    },
+                  });
+                }
+                return vnode.children.map((vnode, index) =>
+                  h("div", {
+                    class: {
+                      "lightbox-thumbnail": true,
+                      "lightbox-thumbnail-active": activeIndex.value === index,
+                    },
+                    style: {
+                      "background-image": `url(${vnode.props.src})`,
+                    },
+                    onClick: (event) => {
+                      openImage(index);
+                      event.stopPropagation();
+                    },
+                  })
+                );
+              })
+            ),
+          ]
+        ),
+      ],
     ];
   },
 });

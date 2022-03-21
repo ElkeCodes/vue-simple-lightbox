@@ -1,6 +1,6 @@
 {
   "name": "vue-wrapping-lightbox",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "Elke Heymans",
   "scripts": {
     "dev": "vite",
