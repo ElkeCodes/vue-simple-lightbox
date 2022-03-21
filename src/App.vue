@@ -1,11 +1,5 @@
 <template>
-  <button @click="active = !active">Toggle lightbox</button>
-  <vue-wrapping-lightbox ref="lightbox">
-    <img src="https://randomfox.ca/images/57.jpg" alt="" />
-    <img src="https://randomfox.ca/images/117.jpg" alt="" />
-    <img src="https://randomfox.ca/images/40.jpg" alt="" />
-  </vue-wrapping-lightbox>
-  <div class="images">
+  <vue-wrapping-lightbox ref="lightbox" class="images">
     <img
       src="https://randomfox.ca/images/57.jpg"
       alt=""
@@ -24,24 +18,23 @@
       @click="$refs.lightbox.openImage(2)"
       class="image"
     />
-  </div>
+  </vue-wrapping-lightbox>
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
 import VueWrappingLightbox from "./VueWrappingLightbox.vue";
-
-const active = ref(false);
 </script>
 
 <style>
 .images {
-  display: flex;
+  display: grid;
   gap: 10px;
+  grid-template-columns: repeat(3, 100px);
+  grid-auto-rows: 100px;
 }
 .image {
-  width: 100px;
-  height: 100px;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 </style>

@@ -3,20 +3,14 @@
 </template>
 
 <script setup lang="ts">
-import { defineComponent, h, useSlots, withDefaults, ref } from "vue";
+import { defineComponent, h, useSlots, ref, useAttrs } from "vue";
 import NextArrow from "./components/NextArrow.vue";
 import PreviousArrow from "./components/PreviousArrow.vue";
 import Close from "./components/Close.vue";
 
 const slots = useSlots();
 
-interface LightboxProps {
-  active: boolean;
-}
-
-const props = withDefaults(defineProps<LightboxProps>(), { active: false });
-
-const isActive = ref(props.active);
+const isActive = ref(false);
 const activeIndex = ref(0);
 
 const previousImage = (event) => {
@@ -40,57 +34,77 @@ const openImage = (index: number): void => {
   activeIndex.value = index;
 };
 
+const attrs = useAttrs();
+
 const VueWrappingLightbox = defineComponent({
-  render() {
+  render(vnode) {
     if (!slots.default) {
       return undefined;
     }
-    return h(
-      "div",
-      {
-        class: { lightbox: true, "lightbox-active": isActive.value },
-        onClick: closeLightbox,
-      },
-      [
-        h("div", { class: "lightbox-content" }, [
-          h(slots.default().at(activeIndex.value), {
-            class: "lightbox-image",
-          }),
-        ]),
-        h("div", { class: "lightbox-close", onClick: closeLightbox }, h(Close)),
-        h(
-          "div",
-          { class: "lightbox-previous", onClick: previousImage },
-          h(PreviousArrow)
-        ),
-        h("div", { class: "lightbox-next", onClick: nextImage }, h(NextArrow)),
-        h(
-          "div",
-          { class: "lightbox-counter" },
-          `${activeIndex.value + 1} / ${slots.default().length}`
-        ),
-        h(
-          "div",
-          { class: "lightbox-thumbnails" },
-          slots.default().map((vnode, index) => {
-            console.log(vnode);
-            return h("div", {
-              class: {
-                "lightbox-thumbnail": true,
-                "lightbox-thumbnail-active": activeIndex.value === index,
-              },
-              style: {
-                "background-image": `url(${vnode.props.src})`,
-              },
-              onClick: (event) => {
-                openImage(index);
-                event.stopPropagation();
-              },
-            });
-          })
-        ),
-      ]
-    );
+    return [
+      h(
+        "div",
+        {
+          ...attrs,
+        },
+        [
+          slots.default(),
+          h(
+            "div",
+            {
+              class: { lightbox: true, "lightbox-active": isActive.value },
+              onClick: closeLightbox,
+            },
+            [
+              h("div", { class: "lightbox-content" }, [
+                h(slots.default().at(activeIndex.value), {
+                  class: "lightbox-image",
+                }),
+              ]),
+              h(
+                "div",
+                { class: "lightbox-close", onClick: closeLightbox },
+                h(Close)
+              ),
+              h(
+                "div",
+                { class: "lightbox-previous", onClick: previousImage },
+                h(PreviousArrow)
+              ),
+              h(
+                "div",
+                { class: "lightbox-next", onClick: nextImage },
+                h(NextArrow)
+              ),
+              h(
+                "div",
+                { class: "lightbox-counter" },
+                `${activeIndex.value + 1} / ${slots.default().length}`
+              ),
+              h(
+                "div",
+                { class: "lightbox-thumbnails" },
+                slots.default().map((vnode, index) => {
+                  return h("div", {
+                    class: {
+                      "lightbox-thumbnail": true,
+                      "lightbox-thumbnail-active": activeIndex.value === index,
+                    },
+                    style: {
+                      "background-image": `url(${vnode.props.src})`,
+                    },
+                    onClick: (event) => {
+                      openImage(index);
+                      event.stopPropagation();
+                    },
+                  });
+                })
+              ),
+            ]
+          ),
+        ]
+      ),
+    ];
   },
 });
 
@@ -163,6 +177,8 @@ defineExpose({
 }
 
 .lightbox-image {
+  width: 100%;
+  height: 100%;
   max-width: 100%;
   max-height: 100vh;
 }
