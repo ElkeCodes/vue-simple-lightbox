@@ -15,13 +15,13 @@ const activeIndex = ref(0);
 
 const previousImage = (event) => {
   activeIndex.value === 0
-    ? (activeIndex.value = slots.default().length - 1)
+    ? (activeIndex.value = slots.default().at(0).children.length - 1)
     : (activeIndex.value -= 1);
   event.stopPropagation();
 };
 
 const nextImage = (event) => {
-  activeIndex.value === slots.default().length - 1
+  activeIndex.value === slots.default().at(0).children.length - 1
     ? (activeIndex.value = 0)
     : (activeIndex.value += 1);
   event.stopPropagation();
@@ -37,7 +37,7 @@ const openImage = (index: number): void => {
 const attrs = useAttrs();
 
 const VueWrappingLightbox = defineComponent({
-  render(vnode) {
+  render() {
     if (!slots.default) {
       return undefined;
     }
@@ -57,7 +57,7 @@ const VueWrappingLightbox = defineComponent({
             },
             [
               h("div", { class: "lightbox-content" }, [
-                h(slots.default().at(activeIndex.value), {
+                h(slots.default().at(0).children.at(activeIndex.value), {
                   class: "lightbox-image",
                 }),
               ]),
@@ -79,25 +79,46 @@ const VueWrappingLightbox = defineComponent({
               h(
                 "div",
                 { class: "lightbox-counter" },
-                `${activeIndex.value + 1} / ${slots.default().length}`
+                `${activeIndex.value + 1} / ${
+                  slots.default().at(0).children.length
+                }`
               ),
               h(
                 "div",
                 { class: "lightbox-thumbnails" },
                 slots.default().map((vnode, index) => {
-                  return h("div", {
-                    class: {
-                      "lightbox-thumbnail": true,
-                      "lightbox-thumbnail-active": activeIndex.value === index,
-                    },
-                    style: {
-                      "background-image": `url(${vnode.props.src})`,
-                    },
-                    onClick: (event) => {
-                      openImage(index);
-                      event.stopPropagation();
-                    },
-                  });
+                  if (vnode.type === "img") {
+                    return h("div", {
+                      class: {
+                        "lightbox-thumbnail": true,
+                        "lightbox-thumbnail-active":
+                          activeIndex.value === index,
+                      },
+                      style: {
+                        "background-image": `url(${vnode.props.src})`,
+                      },
+                      onClick: (event) => {
+                        openImage(index);
+                        event.stopPropagation();
+                      },
+                    });
+                  }
+                  return vnode.children.map((vnode) =>
+                    h("div", {
+                      class: {
+                        "lightbox-thumbnail": true,
+                        "lightbox-thumbnail-active":
+                          activeIndex.value === index,
+                      },
+                      style: {
+                        "background-image": `url(${vnode.props.src})`,
+                      },
+                      onClick: (event) => {
+                        openImage(index);
+                        event.stopPropagation();
+                      },
+                    })
+                  );
                 })
               ),
             ]
