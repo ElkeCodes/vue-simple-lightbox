@@ -103,21 +103,24 @@ const VueWrappingLightbox = defineComponent({
                     },
                   });
                 }
-                return vnode.children.map((vnode, index) =>
-                  h("div", {
-                    class: {
-                      "lightbox-thumbnail": true,
-                      "lightbox-thumbnail-active": activeIndex.value === index,
-                    },
-                    style: {
-                      "background-image": `url(${vnode.props.src})`,
-                    },
-                    onClick: (event) => {
-                      openImage(index);
-                      event.stopPropagation();
-                    },
-                  })
-                );
+                return vnode.children
+                  ? vnode.children.map((vnode, index) =>
+                      h("div", {
+                        class: {
+                          "lightbox-thumbnail": true,
+                          "lightbox-thumbnail-active":
+                            activeIndex.value === index,
+                        },
+                        style: {
+                          "background-image": `url(${vnode.props.src})`,
+                        },
+                        onClick: (event) => {
+                          openImage(index);
+                          event.stopPropagation();
+                        },
+                      })
+                    )
+                  : vnode;
               })
             ),
           ]

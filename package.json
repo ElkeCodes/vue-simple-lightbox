@@ -1,6 +1,6 @@
 {
   "name": "vue-wrapping-lightbox",
-  "version": "0.0.6",
+  "version": "0.0.8",
   "author": "Elke Heymans",
   "scripts": {
     "dev": "vite",
@@ -28,7 +28,8 @@
     ".": {
       "import": "./dist/vue-wrapping-lightbox.es.js",
       "require": "./dist/vue-wrapping-lightbox.umd.js"
-    }
+    },
+	"./dist/style.css": "./dist/style.css"
   },
   "dependencies": {
     "vue": "^3.2.31"
